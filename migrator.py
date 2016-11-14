@@ -6,11 +6,15 @@ from decimal import *
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url="https://dynamodb.us-east-1.amazonaws.com")
 
-table = dynamodb.Table('demo')
+table = dynamodb.Table('targetTable')
 
 
-with open("/Users/uashfaq/rnd/python/data/json/d.json") as json_file:
-    file = json.load(json_file)
+parser = argparse.ArgumentParser(description="Simple migration script.")
+parser.add_argument("-i", "--input", dest='input', action='store',help='input file')
+args = parser.parse_args()
+
+with open(args.input) as json_file:
+  file = json.load(json_file)
 
 k = []
 v = []
