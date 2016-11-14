@@ -28,7 +28,7 @@ for f in file:
      k.append(f.keys()[x])
 
  for x in range( len ( f.keys() ) ):
-    # Dyanamo does not support float types so check if value is float , if yes then conver to decimal 
+    # Dyanamo does not support float types so check if value is float , if yes then convert to decimal 
     if type(f[f.keys()[x]])==float:
       v.append(Decimal(f[f.keys()[x]]))
      
