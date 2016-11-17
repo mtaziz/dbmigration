@@ -18,23 +18,22 @@ args = parser.parse_args()
 with open(args.input) as json_file:
   file = json.load(json_file)
 
-#Key list
-k = []
-# Values for corresponding keys
-v = []
-
-for f in file:
- for x in range( len ( f.keys() ) ):
-     k.append(f.keys()[x])
-
- for x in range( len ( f.keys() ) ):
-    # Dyanamo does not support float types so check if value is float , if yes then convert to decimal 
-    if type(f[f.keys()[x]])==float:
-      v.append(Decimal(f[f.keys()[x]]))
-     
-    else:
-      v.append(f[f.keys()[x]])
-
- print ("adding:", dict(zip(k,v)))
- #Write request to dynamo
- table.put_item(Item=dict(zip(k,v)))
+for obj in file:
+      
+        key1 = obj['key1']
+        key2= obj['key2']
+        key3 = obj['key3']
+        key4 = obj['key4']
+        key5 = obj['key5']
+        key5 = obj['key6']
+        print("Adding :", key1, key2, key3, key4,key5,key6)
+        table.put_item(
+           Item={
+               '_id': key1,
+               'k': key2,
+               't': key3,
+               'ts': key4,
+               'c': key5,
+               'i': key6
+            }
+        )
