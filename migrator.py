@@ -1,39 +1,28 @@
-import boto3
+from decimal import *
 import json
-from decimal import *
-import argparse
-from decimal import *
+import boto3
 
-#create a boto3 resource for Dynamo
+
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url="https://dynamodb.us-east-1.amazonaws.com")
 
-# Set the the target table for the boto3 resource (dynamo)
-table = dynamodb.Table('targetTable')
+table = dynamodb.Table('demo')
 
 
-parser = argparse.ArgumentParser(description="Simple migration script.")
-parser.add_argument("-i", "--input", dest='input', action='store',help='input file')
-args = parser.parse_args()
 
-with open(args.input) as json_file:
-  file = json.load(json_file)
+with open("/Users/uashfaq/rnd/python/data/json/d.json") as json_file:
+    file = json.load(json_file)
 
-for obj in file:
-      
-        key1 = obj['key1']
-        key2= obj['key2']
-        key3 = obj['key3']
-        key4 = obj['key4']
-        key5 = obj['key5']
-        key5 = obj['key6']
-        print("Adding :", key1, key2, key3, key4,key5,key6)
-        table.put_item(
-           Item={
-               'key1': key1,
-               'key2': key2,
-               'key3': key3,
-               'key4': key4,
-               'key5': key5,
-               'key6': key6
-            }
-        )
+    for f in file:
+        v=f.values()
+        for value in f.values():
+            if type(value)==float:
+                index = v.index(value)
+                val = Decimal(value)
+                v.pop(index)
+                v.insert(index,val)
+                print ("Adding:",dict(zip(f.keys(),v)))
+                table.put_item(Item=dict(zip(f.keys(),v)))
+
+        if any(isinstance(value,float) for value in f.values()) is not True:
+         print ("Adding:",dict(zip(f.keys(),v)))
+         table.put_item(Item=dict(zip(f.keys(),v)))
