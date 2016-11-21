@@ -5,11 +5,11 @@ import boto3
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url="https://dynamodb.us-east-1.amazonaws.com")
 
-table = dynamodb.Table('demo')
+table = dynamodb.Table('targetTable')
 
 
 
-with open("/Users/uashfaq/rnd/python/data/json/d.json") as json_file:
+with open("/path/to/file.json") as json_file:
     file = json.load(json_file)
 
     for f in file:
