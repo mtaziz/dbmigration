@@ -1,15 +1,18 @@
+#!/usr/bin/env python
+import argsparse
+import boto3
 from decimal import *
 import json
-import boto3
+
 
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url="https://dynamodb.us-east-1.amazonaws.com")
-
 table = dynamodb.Table('targetTable')
+parser = argparse.ArgumentParser(description="Mongo data migrator.")
+parser.add_argument("-i", "--input", dest='input', action='store',help='Input file name')
+args = parser.parse_args()
 
-
-
-with open("/path/to/file.json") as json_file:
+with open(args.input) as json_file:
     file = json.load(json_file)
 
     for f in file:
